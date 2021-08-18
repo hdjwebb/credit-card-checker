@@ -28,22 +28,19 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 // validate cards using luhn method
 
 const validateCred = arr => {
-  let copiedArr = [...arr]                              // copy array
-  let removedLast = copiedArr.pop()                     // remove last digit of array
-  let reversedArray = copiedArr.reverse()               // reverse copied array
+  let copiedArr = [...arr]                              				// copy array
+  let removedLast = copiedArr.pop()                     				// remove last digit of array
+  let reversedArray = copiedArr.reverse()               				// reverse copied array
   
   //console.log(`this is the last digit ${removedLast}`)
   
-  let newArray = []
+  let newArray = []									// new empty array
   
-  //console.log(copiedArr)
-  //console.log(reversedArray)
-  
-  for ( i = 0; i < reversedArray.length; i++) {         // loop through array
-      if (i % 2 === 1) {                                // if odd - add number to new array 
+  for ( i = 0; i < reversedArray.length; i++) {         				// loop through array
+      if (i % 2 === 1) {                                				// if odd - add number to new array 
         newArray.push(reversedArray[i])
       }
-      if (i % 2 === 0) {                                // if even - multiple by 2, if over 9, minus 9. Then add to the new array
+      if (i % 2 === 0) {                                				// if even - multiple by 2, if over 9, minus 9. Then add to the new array
         let j = reversedArray[i] * 2
         if (j > 9) {
           j -= 9
@@ -76,13 +73,13 @@ const findInvalidCards = batchArray => {
 
 const checkCards = batchArray => {
   const validArray = [];    
-  const invalidArray = [];                								// new empty array
-  for (let card in batchArray ) {         								// loop through batchArray
+  const invalidArray = [];                						// new empty array
+  for (let card in batchArray ) {         						// loop through batchArray
     let currCard = batchArray[card];          
-    if (validateCred(currCard)) {         								// check if true
-      validArray.push(currCard);          								// add to validArray 
-    } else if (!validateCred(currCard)) { 								// check if false
-      invalidArray.push(currCard);        								// add to invalidArray 
+    if (validateCred(currCard)) {         						// check if true
+      validArray.push(currCard);          						// add to validArray 
+    } else if (!validateCred(currCard)) { 						// check if false
+      invalidArray.push(currCard);        						// add to invalidArray 
     } 
   }
   return {invalidArray, validArray};           						// return the arrays
@@ -91,12 +88,12 @@ const checkCards = batchArray => {
 // function to see which companies have sent out invalid card. not duplicating the company if already found
 
 const idValidCardCompanies = batchArray => {
-  const companyArray = [];																// empty array for company
-  for (let i in batchArray) {															// loop through array
-    switch (batchArray[i][0]) {														// switch statement to check the first char of each item in the array
+  const companyArray = [];								// empty array for company
+  for (let i in batchArray) {								// loop through array
+    switch (batchArray[i][0]) {								// switch statement to check the first char of each item in the array
       case 3:
-        if (companyArray.indexOf("Amex") === -1 ){				// check if the company is already in the comapny array
-          companyArray.push("Amex");											// add to company array
+        if (companyArray.indexOf("Amex") === -1 ){					// check if the company is already in the comapny array
+          companyArray.push("Amex");							// add to company array
         }
         break;
       case 4:
@@ -115,7 +112,7 @@ const idValidCardCompanies = batchArray => {
         }
         break;
       default:
-        console.log("Company not found")									// if known of the above print
+        console.log("Company not found")						// if known of the above print
     }
   }
   return companyArray;  
@@ -125,15 +122,15 @@ const idValidCardCompanies = batchArray => {
 // function to change a string in to an array
 
 const formatString = string => {													
-   const array = string.split('');												// split string with no spaces
+   const array = string.split('');							// split string with no spaces
    return array;
 }
 
 
-console.log(formatString("453627181902836"))									// test format string [4,5,3,6...]
+console.log(formatString("453627181902836"))						// test format string [4,5,3,6...]
 
-console.log(validateCred(formatString("453627181902836")))		// false
+console.log(validateCred(formatString("453627181902836")))				// false
 	
-console.log(checkCards(batch))																// { invalidArray: [ [ 4, 5, 3... ], validArray: [ [ 4, 5, 3...		]] }			
+console.log(checkCards(batch))								// { invalidArray: [ [ 4, 5, 3... ], validArray: [ [ 4, 5, 3...		]] }			
 
-console.log(idValidCardCompanies(batch))											// [ 'Visa', 'Mastercard', 'Amex', 'Discover' ]
+console.log(idValidCardCompanies(batch))						// [ 'Visa', 'Mastercard', 'Amex', 'Discover' ]
